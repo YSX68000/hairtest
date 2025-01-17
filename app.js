@@ -51,7 +51,7 @@ uploadForm.addEventListener('submit', async (e) => {
   }
 });
 
-// 処理結果の画像を取得
+// 処理結果の画像をポーリングで取得
 fetchResultButton.addEventListener('click', async () => {
   const requestId = localStorage.getItem('request_id');
   if (!requestId) {
@@ -59,27 +59,39 @@ fetchResultButton.addEventListener('click', async () => {
     return;
   }
 
-  try {
-    // request_idを使って結果を取得
-    const response = await fetch(`https://api.magicapi.dev/api/v1/magicapi/hair/hair/${requestId}`, {
-      method: 'GET',
-      headers: {
-        'accept': 'application/json',
-        'x-magicapi-key': 'cm60r5hlt0001jo03gnjm1t7g',
-      },
-    });
-    const data = await response.json();
+  const checkForResults = async () => {
+    try {
+      // request_idを使って結果を取得
+      const response = await fetch(`https://api.magicapi.dev/api/v1/magicapi/hair/hair/${requestId}`, {
+        method: 'GET',
+        headers: {
+          'accept': 'application/json',
+          'x-magicapi-key': 'cm60r5hlt0001jo03gnjm1t7g',
+        },
+      });
+      const data = await response.json();
 
-    if (data.error_code) {
-      alert('Error: ' + data.error_msg);
-      return;
+      if (data.error_code) {
+        alert('Error: ' + data.error_msg);
+        return;
+      }
+
+      if (data.result_image_url) {
+        // 結果画像が準備できていれば表示
+        const imageUrl = data.result_image_url;
+        resultImage.src = imageUrl;
+        resultImage.style.display = 'block';  // 画像を表示
+      } else {
+        // 結果がまだ準備できていない場合、一定時間後に再度チェック
+        console.log('Image not ready yet, retrying...');
+        setTimeout(checkForResults, 5000);  // 5秒後に再リクエスト
+      }
+    } catch (error) {
+      console.error('Error fetching the image:', error);
+      alert('There was an error fetching the result.');
     }
+  };
 
-    const imageUrl = data.result_image_url;
-    resultImage.src = imageUrl;
-    resultImage.style.display = 'block';  // 画像を表示
-  } catch (error) {
-    console.error('Error fetching the image:', error);
-    alert('There was an error fetching the result.');
-  }
+  // 結果が得られるまでポーリング開始
+  checkForResults();
 });
