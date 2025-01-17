@@ -7,6 +7,7 @@
 </head>
 <body>
   <h1>Upload Your Image and Change Hairstyle</h1>
+  
   <!-- 画像アップロードフォーム -->
   <form id="uploadForm">
     <input type="file" id="imageInput" accept="image/*" required />
@@ -25,7 +26,10 @@
 
   <!-- 処理結果の表示 -->
   <h2>Processed Image</h2>
-  <img id="resultImage" src="" alt="Processed Image will appear here" style="max-width: 100%;" />
+  <img id="resultImage" src="" alt="Processed Image will appear here" style="max-width: 100%; display: none;" />
+
+  <!-- 結果取得ボタン -->
+  <button id="fetchResult" style="display: none;">Get Processed Image</button>
 
   <script src="app.js"></script>
 </body>
