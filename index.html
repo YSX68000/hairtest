@@ -3,34 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hairstyle Changer</title>
+  <title>Request ID Page</title>
 </head>
 <body>
-  <h1>Upload Your Image and Change Hairstyle</h1>
-  
-  <!-- 画像アップロードフォーム -->
+  <h1>Upload Image and Get Request ID</h1>
   <form id="uploadForm">
     <input type="file" id="imageInput" accept="image/*" required />
-    <button type="submit">Upload Image</button>
+    <button type="submit">Get Request ID</button>
   </form>
 
-  <!-- ヘアスタイルの選択フォーム -->
-  <label for="hairstyleSelect">Choose Hairstyle:</label>
-  <select id="hairstyleSelect">
-    <option value="BuzzCut">BuzzCut</option>
-    <option value="UnderCut">UnderCut</option>
-    <option value="Pompadour">Pompadour</option>
-    <option value="SlickBack">SlickBack</option>
-    <!-- 追加のスタイルを必要に応じて追加 -->
-  </select>
-
-  <!-- 処理結果の表示 -->
-  <h2>Processed Image</h2>
-  <img id="resultImage" src="" alt="Processed Image will appear here" style="max-width: 100%; display: none;" />
-
-  <!-- 結果取得ボタン -->
-  <button id="fetchResult" style="display: none;">Get Processed Image</button>
-
-  <script src="app.js"></script>
+  <script src="page1.js"></script>
 </body>
 </html>
