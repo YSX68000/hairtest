@@ -1,5 +1,20 @@
+// Firebase設定の初期化
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBFSiyBdYVduIfCLknn4ppQFl1uSPF38iM",
+  authDomain: "hairtest-18780.firebaseapp.com",
+  projectId: "hairtest-18780",
+  storageBucket: "hairtest-18780.firebasestorage.app",
+  messagingSenderId: "721724464874",
+  appId: "1:721724464874:web:d6451fc814377c2e2b0193"
+};
+
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
+
 const statusUrl = 'https://api.magicapi.dev/api/v1/magicapi/hair/predictions/';
-const storageBucketUrl = 'https://storage.googleapis.com/hairtest68/';
 
 document.getElementById('getResultButton').addEventListener('click', async () => {
   const requestId = localStorage.getItem('request_id');
@@ -36,17 +51,7 @@ document.getElementById('getResultButton').addEventListener('click', async () =>
   }
 
   if (imageUrl) {
-    const downloadedImageUrl = await downloadImageToCloudStorage(imageUrl);
     const resultImage = document.getElementById('resultImage');
-    resultImage.src = downloadedImageUrl;
+    resultImage.src = imageUrl; // 取得した画像URLを表示
   }
 });
-
-// Google Cloud Storageに画像をダウンロード (仮実装)
-async function downloadImageToCloudStorage(imageUrl) {
-  const fileName = imageUrl.split('/').pop(); // ファイル名を抽出
-  const fullUrl = `${storageBucketUrl}${fileName}`;
-
-  // 実際のダウンロード処理をここに実装
-  return fullUrl; // ダウンロードされた画像のURLを返す
-}
